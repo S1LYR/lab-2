@@ -33,8 +33,8 @@ int safeInputK() {
     while (true) {
         cin >> value;
         if (cin.fail()) {
-            cin.clear();  // Сбрасываем флаг ошибки
-            cin.ignore();  // Очищаем буфер
+            cin.clear();  
+            cin.ignore();  
             cerr << "Ошибка: введите целое число больше 0.\n";
         } else if (value <= 0) {
             cerr << "Ошибка: K должно быть больше 0.\n";
@@ -103,16 +103,14 @@ void task2() {
             L.push_back(safeInput());
         }
 
-        // Вставляем в список первые 5 элементов вектора в обратном порядке
         auto it = L.begin();
-        advance(it, 5);  // Перемещаем итератор на 5-й элемент
+        advance(it, 5);  
 
-        // Вставка первых 5 элементов вектора в обратном порядке
         for (int i = 4; i >= 0; --i) {
-            L.insert(it, V[i]); // Вставка элементов в обратном порядке
+            L.insert(it, V[i]); 
         }
 
-        // Выводим итоговый список
+
         cout << "Итоговый список:\n";
         for (const auto& elem : L) {
             cout << elem << " ";
@@ -142,24 +140,23 @@ void task3() {
         L2.push_back(safeInput());
     }
 
-    // Определяем итераторы для первой и второй половин списков
+
     auto mid1 = L1.begin();
-    advance(mid1, size / 2);  // Перемещаем на середину L1
+    advance(mid1, size / 2);  
 
     auto mid2 = L2.begin();
-    advance(mid2, size / 2);  // Перемещаем на середину L2
+    advance(mid2, size / 2); 
 
-    // Меняем местами первую половину L1 и вторую половину L2
-    list<int> temp1(mid1, L1.end());  // Временный список для первой половины L1
-    list<int> temp2(mid2, L2.end());  // Временный список для второй половины L2
+    list<int> temp1(mid1, L1.end()); 
+    list<int> temp2(mid2, L2.end()); 
 
-    L1.erase(mid1, L1.end());  // Удаляем вторую половину L1
-    L2.erase(mid2, L2.end());  // Удаляем первую половину L2
+    L1.erase(mid1, L1.end()); 
+    L2.erase(mid2, L2.end());  
 
-    L1.splice(L1.end(), temp2); // Добавляем вторую половину L2 в конец L1
-    L2.splice(L2.end(), temp1); // Добавляем первую половину L1 в конец L2
+    L1.splice(L1.end(), temp2); 
+    L2.splice(L2.end(), temp1);
 
-    // Выводим итоговые списки
+
     cout << "Итоговый список L1:\n";
     for (const auto& elem : L1) {
         cout << elem << " ";
@@ -186,31 +183,30 @@ void task4(int K, const string& inputFile, const string& outputFile) {
         return;
     }
 
-    // Чтение слов и запись в выходной файл с фильтрацией
-    istream_iterator<string> start(infile), end;  // Итераторы для чтения слов
-    ostream_iterator<string> output_it(outfile, "\n");  // Итератор для записи слов
+
+    istream_iterator<string> start(infile), end;  
+    ostream_iterator<string> output_it(outfile, "\n");  
 
     remove_copy_if(start, end, output_it, [K](const string& word) {
-        return word.length() > K;  // Условие фильтрации
+        return word.length() > K;  
     });
 }
 
 void task5(deque<int>& D) {
-    // Используем обратный итератор для поиска последнего нуля
+
     auto it = find(D.rbegin(), D.rend(), 0);
 
-    // Проверяем, найден ли нулевой элемент
     if (it != D.rend()) {
-        // Удаляем элемент, преобразовав обратно в обычный итератор
+
         D.erase(--it.base()); // Удаляем элемент, предшествующий base() итератора
     }
 }
 
 deque<int> generateDeque(int size) {
     deque<int> D;
-    D.push_back(0); // Обязательно добавляем 0 в начало
+    D.push_back(0); 
 
-    // Генерируем случайные числа от 0 до 10
+
     for (int i = 1; i < size; ++i) {
         D.push_back(rand() % 11); // Случайное число от 0 до 10
     }
@@ -219,28 +215,26 @@ deque<int> generateDeque(int size) {
 }
 
 void task6(vector<int>& V1, vector<int>& V2, int A, int B) {
-    // Заполнение V1 с использованием fill_n и inserter/back_inserter
-    fill_n(inserter(V1, V1.begin()), 5, A); // Вставляем A в начало
-    fill_n(back_inserter(V1), 5, B); // Вставляем B в конец
 
-    // Заполнение V2 с использованием функции-члена insert
-    V2.insert(V2.begin(), 5, A); // Вставляем A в начало
+    fill_n(inserter(V1, V1.begin()), 5, A); 
+    fill_n(back_inserter(V1), 5, B); 
+
+    V2.insert(V2.begin(), 5, A); 
     V2.insert(V2.end(), 5, B);}
 
 vector<int> generateSortedVector(int size) {
     vector<int> V(size);
-    // Заполняем первую половину отсортированными числами
     for (int i = 0; i < size / 2; ++i) {
         V[i] = i; // Пример: 0, 1, 2, ..., size/2 - 1
     }
-    // Заполняем вторую половину случайными числами
+
     for (int i = size / 2; i < size; ++i) {
-        V[i] = rand() % 100; // Случайные числа от 0 до 99
+        V[i] = rand() % 100; 
     }
     return V;}
 
 void task7(vector<int>& V) {
-    // Сортируем вторую половину
+
     sort(V.begin() + V.size() / 2, V.end());
     cout << "Вектор после сортировки второй половины: ";
     for (const auto& num : V) {
@@ -248,7 +242,7 @@ void task7(vector<int>& V) {
     }
     cout << endl;
 
-    // Сливаем обе половины
+
     inplace_merge(V.begin(), V.begin() + V.size() / 2, V.end());
     cout << "Вектор после слияния: ";
     for (const auto& num : V) {
@@ -258,30 +252,29 @@ void task7(vector<int>& V) {
 }
 
 void task8(int numElements, double minValue, double maxValue) {
-    // Создаем список L и заполняем его случайными числами
+
     list<double> L;
     for (int i = 0; i < numElements; ++i) {
         double randomValue = minValue + static_cast<double>(rand()) / (static_cast<double>(RAND_MAX / (maxValue - minValue)));
         L.push_back(randomValue);
     }
 
-    // Вектор V для хранения средних значений
     vector<double> V;
 
-    // Используем adjacent_difference для вычисления разностей
+
     adjacent_difference(L.begin(), L.end(), back_inserter(V), [](double a, double b) {
-        return (a + b) / 2; // Функциональный объект для среднего арифметического
+        return (a + b) / 2; 
     });
     V.erase(V.begin());
 
-    // Выводим исходный список
+к
     cout << "Исходный список L: ";
     for (const auto& num : L) {
         cout << num << " ";
     }
     cout << endl;
 
-    // Выводим полученные средние значения
+
     cout << "Полученный вектор средних значений: ";
     for (const auto& num : V) {
         cout << num << " ";
@@ -310,33 +303,31 @@ void task9() {
         return;
     }
 
-    // Создаем и заполняем вектор V0 случайными числами
+
     vector<int> V0(sizeV0);
     for (int& num : V0) {
         num = rand() % 10 + 1; // Случайные числа от 1 до 10
     }
 
-    // Создаем векторы V1, ..., VN
+
     vector<vector<int>> vectors(N);
     for (int i = 0; i < N; ++i) {
         // Генерируем случайный размер вектора от sizeV0 до 100
         int sizeVi = rand() % (100 - sizeV0 + 1) + sizeV0; // Случайный размер от sizeV0 до 100
         vectors[i].resize(sizeVi);
 
-        // Заполняем текущий вектор случайными числами
         for (int& num : vectors[i]) {
             num = rand() % 10 + 1; // Случайные числа от 1 до 10
         }
     }
 
-    // Выводим вектор V0
     cout << "Вектор V0: ";
     for (const auto& num : V0) {
         cout << num << " ";
     }
     cout << endl;
 
-    // Выводим векторы V1, ..., VN
+
     for (int i = 0; i < N; ++i) {
         cout << "Вектор V" << (i + 1) << ": ";
         for (const auto& num : vectors[i]) {
@@ -345,26 +336,25 @@ void task9() {
         cout << endl;
     }
 
-    // Создаем множество уникальных элементов из V0
+
     set<int> uniqueV0(V0.begin(), V0.end());
 
-    int count = 0; // Счетчик векторов, содержащих все элементы из V0
+    int count = 0; 
 
-    // Проверяем каждый вектор
+
     for (const auto& v : vectors) {
-        set<int> uniqueVi(v.begin(), v.end()); // Уникальные элементы текущего вектора
-        // Проверяем, содержит ли текущий вектор все элементы из uniqueV0
+        set<int> uniqueVi(v.begin(), v.end()); 
+
         if (includes(uniqueVi.begin(), uniqueVi.end(), uniqueV0.begin(), uniqueV0.end())) {
             count++;
         }
     }
 
-    // Выводим результат
     cout << "Количество векторов, содержащих все элементы из V0: " << count << endl;
 }
 
 void task10() {
-    // Заполнение вектора V названиями алкогольных напитков
+
     vector<string> V = {
         "VODKA", "VERMOUTH", "WHISKEY", "WINE",
         "RUM", "RUM", "GIN", "GIN",
@@ -372,21 +362,21 @@ void task10() {
         "BEER", "ALE", "MEAD", "SPIRITS"
     };
 
-    // Отображение для хранения суммарной длины слов по первой букве
+
     map<char, int> M;
     cout << "Список совершенно случайных английских слов:" << endl;
     for (const auto& drink : V) {
-        cout << drink << endl; // Выводим каждый напиток
+        cout << drink << endl; 
     }
     cout << endl;
-    // Заполнение отображения M
+
     for (auto it = V.begin(); it != V.end(); ++it) {
-        M[(*it)[0]] += it->size(); // Суммируем длины слов по первой букве
+        M[(*it)[0]] += it->size();
     }
 
-    // Сортировка ключей отображения M и вывод результата
+
     for (auto it = M.begin(); it != M.end(); ++it) {
-        cout << it->first << ": " << it->second << endl; // Выводим буквы и их суммарные длины
+        cout << it->first << ": " << it->second << endl; 
     }
 }
 
@@ -434,7 +424,7 @@ int main(){
                 cout << "Введите размер дека (больше 1): ";
                 cin >> size;
 
-            // Проверка на допустимый размер
+
                 if (size <= 1) {
                     cerr << "Размер дека должен быть больше 1." << endl;
                     return 1;}
@@ -493,7 +483,6 @@ int main(){
                 cout << "Введите количество элементов в списке: ";
             cin >> numElements;
 
-            // Проверка на положительное количество элементов
             if (numElements <= 1) {
                 cerr << "Количество элементов должно быть больше 1." << endl;
                 return 1;
